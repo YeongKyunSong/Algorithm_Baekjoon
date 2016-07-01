@@ -10,43 +10,35 @@
 
 using namespace std;
 
-int a[1000000];
-
-int cal(int num) {
-	int cnt[3] = { 0 };
-	if (num == 3)
-		return 1;
-	else if (num == 2)
-		return 1;
-	else if (num == 1)
-		return 0;
-	else if (num % 3 == 0) {
-		cnt[0] = cal(num / 3) + 1;
-	}
-	else if (num % 2 == 0) {
-		cnt[1] = cal(num / 2) + 1;
-	}
-	else {
-		cnt[2] = cal(num-1) + 1;
-	}
-	sort(cnt[0], cnt[2]);
-
-	a[num] = cnt[0];
-	return a[num];
-}
+int a[1000001];
 
 int main() {
 	int test_num;
-
-	scanf("%d", &test_num);
+	for (int i = 0; i < 1000001; i++) {
+		a[i] = 1000000;
+	}
 
 	a[1] = 0;
 	a[2] = 1;
 	a[3] = 1;
 
-	cal(test_num);
+	for (int i = 4; i < 1000001; i++) {
+		if (i % 3 == 0){
+			a[i] = a[i / 3] + 1;
+		}
+		if (i % 2 == 0) {
+			if (a[i] > a[i / 2] + 1) {
+				a[i] = a[i / 2] + 1;
+			}
+		}
+		if (a[i] > a[i - 1] + 1) {
+			a[i] = a[i - 1] + 1;
+		}
+	}
+	while (1) {
+		scanf("%d", &test_num);
 
-	printf("%d", a[test_num]);
-
+		printf("%d\n", a[test_num]);
+	}
 	return 0;
 }
