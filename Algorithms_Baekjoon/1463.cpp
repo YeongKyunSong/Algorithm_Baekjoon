@@ -35,10 +35,8 @@ int main() {
 			a[i] = a[i - 1] + 1;
 		}
 	}
-	while (1) {
-		scanf("%d", &test_num);
+	scanf("%d", &test_num);
 
-		printf("%d\n", a[test_num]);
-	}
+	printf("%d\n", a[test_num]);
 	return 0;
 }
