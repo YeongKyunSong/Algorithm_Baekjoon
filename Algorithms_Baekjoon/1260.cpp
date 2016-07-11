@@ -4,50 +4,60 @@
 #include <vector>
 #include <algorithm>
 #include <math.h>
-#include <stdio.h>
+#include <cstdio>
+#include <string.h>
+#include <queue>
 
 using namespace std;
 
-int N, M, V;
-vector<vector<bool>> index;
-vector<bool> vertex;
+vector<int> a[1001];
+bool check[1001];
 
-void dfs(int *V) {
-	int v = *V;
-	vertex[v] = false;
-	for (int i = 1; i < N + 1; i++) {
-		if (index[v][i] == true && vertex[i]==true) {
-			printf("%d ", i);
-			dfs(&i);
+void dfs(int node) {
+	check[node] = true;
+	printf("%d ", node);
+	for (int i = 0; i < a[node].size(); i++) {
+		int next = a[node][i];
+		if (check[next] == false)
+			dfs(next);
+	}
+}
+void bfs(int start) {
+	queue<int> q;
+	memset(check, false, sizeof(check));
+	check[start] = true;
+	q.push(start);
+	while (!q.empty()) {
+		int node = q.front();
+		q.pop();
+		printf("%d ", node);
+		for (int i = 0; i < a[node].size(); i++) {
+			int next = a[node][i];
+			if (check[next] == false) {
+				check[next] = true;
+				q.push(next);
+			}
 		}
 	}
 }
 
-void bfs(int v) {
-
-
-}
-
 int main() {
-	scanf("%d %d %d", &N, &M, &V);
-	int a, b;
-
-	index.assign(N+1, vector<bool>(N+1, false));
-	vertex.assign(N + 1, true);
-	
+	int N, M, V;
+	scanf("%d%d%d", &N, &M, &V);
 
 	for (int i = 0; i < M; i++) {
-		scanf("%d %d", &a, &b);
-		index[a][b] = true;
-		index[b][a] = true;
+		int u, v;
+		scanf("%d %d", &u, &v);
+		a[u].push_back(v);
+		a[v].push_back(u);
 	}
-
-	printf("%d ", V);
-	dfs(&V);
-
-	vertex.assign(N + 1, true);
-	printf("\n%d ", V);
+	for (int i = 1; i <= N; i++) {
+		sort(a[i].begin(), a[i].end());
+	}
+	dfs(V);
+	puts("");
 	bfs(V);
-	
+	puts("");
+
 	return 0;
 }
