@@ -20,7 +20,7 @@ int main() {
 		for (int j = 0; j<n; j++) {
 			if (a[i][j] == 1 && g[i][j] == 0) {
 				g[i][j] = ++cnt;
-				queue<pair<int, int>> q;
+				queue<pair<int, int> > q;
 				q.push(make_pair(i, j));
 				while (!q.empty()) {
 					int x = q.front().first;
@@ -40,7 +40,7 @@ int main() {
 			}
 		}
 	}
-	queue<pair<int, int>> q;
+	queue<pair<int, int> > q;
 	for (int i = 0; i<n; i++) {
 		for (int j = 0; j<n; j++) {
 			d[i][j] = -1;
